@@ -65,7 +65,7 @@ public class MulticastEventGenerator extends MessageEventGenerator{
         // if(multicastTempID.contains(fromId)){
         //     multicastTempID.remove(fromId);
         // }
-        multicastTempID.removeIf(id -> (id==fromId));
+        multicastTempID.removeIf(id ->(id==fromId));
         // System.out.println("Final List: "+multicastTempID.toString());
         return multicastTempID.toArray(new Integer[multicastTempID.size()]);
 
