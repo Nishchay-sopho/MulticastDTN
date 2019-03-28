@@ -382,8 +382,7 @@ public abstract class ActiveRouter extends MessageRouter {
 	 * @return The tuple whose connection accepted the message or null if
 	 * none of the connections accepted the message that was meant for them.
 	 */
-	protected Tuple<Message, Connection> tryMessagesForConnected(
-			List<Tuple<Message, Connection>> tuples) {
+	protected Tuple<Message, Connection> tryMessagesForConnected(List<Tuple<Message, Connection>> tuples) {
 		if (tuples.size() == 0) {
 			return null;
 		}

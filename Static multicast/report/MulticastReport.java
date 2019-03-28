@@ -27,7 +27,7 @@ public class MulticastReport extends Report implements MessageListener {
 	private List<Double> latencies;
 	private List<Integer> hopCounts;
 	private List<Double> msgBufferTime;
-	private List<Double> rtt; // round trip times
+	// private List<Double> time; // one way trip times
 	
 	private int nrofDropped;
 	private int nrofRemoved;
@@ -49,14 +49,14 @@ public class MulticastReport extends Report implements MessageListener {
 	@Override
 	protected void init() {
 		super.init();
-		// this.creationTimes = new HashMap<String, Double>();
-		// this.latencies = new ArrayList<Double>();
-		// this.msgBufferTime = new ArrayList<Double>();
+		this.creationTimes = new HashMap<String, Double>();
+		this.latencies = new ArrayList<Double>();
+		this.msgBufferTime = new ArrayList<Double>();
 		// this.hopCounts = new ArrayList<Integer>();
 		// this.time = new ArrayList<Double>();
 		
-		// this.nrofDropped = 0;
-		// this.nrofRemoved = 0;
+		this.nrofDropped = 0;
+		this.nrofRemoved = 0;
 		// this.nrofStarted = 0;
 		// this.nrofAborted = 0;
 		// this.nrofRelayed = 0;
@@ -66,20 +66,20 @@ public class MulticastReport extends Report implements MessageListener {
 		this.nrofDelivered = 0;
 	}
 
-	
+	//TODO Check messageDeleted is from where
 	public void messageDeleted(Message m, DTNHost where, boolean dropped) {
-		// if (isWarmupID(m.getId())) {
-		// 	return;
-		// }
+		if (isWarmupID(m.getId())) {
+			return;
+		}
 		
-		// if (dropped) {
-		// 	this.nrofDropped++;
-		// }
-		// else {
-		// 	this.nrofRemoved++;
-		// }
+		if (dropped) {
+			this.nrofDropped++;
+		}
+		else {
+			this.nrofRemoved++;
+		}
 		
-		// this.msgBufferTime.add(getSimTime() - m.getReceiveTime());
+		this.msgBufferTime.add(getSimTime() - m.getReceiveTime());
 	}
 
 	
@@ -100,8 +100,8 @@ public class MulticastReport extends Report implements MessageListener {
 
 		// this.nrofRelayed++;
 		// if (finalTarget) {
-		// 	this.latencies.add(getSimTime() - 
-		// 		this.creationTimes.get(m.getId()) );
+			this.latencies.add(getSimTime() - 
+				this.creationTimes.get(m.getId()) );
 		// 	this.nrofDelivered++;
 		// 	this.hopCounts.add(m.getHops().size() - 1);
 			
@@ -111,22 +111,22 @@ public class MulticastReport extends Report implements MessageListener {
 		// 	}
 		// }
 		updateMsgDelivered();
-		// this.time.add()
+		// this.time.add(getSimTime()-m.getCreationTime());
 	}
 
 
 	public void newMessage(Message m) {
-		// if (isWarmup()) {
-		// 	addWarmupID(m.getId());
-		// 	return;
-		// }
+		if (isWarmup()) {
+			addWarmupID(m.getId());
+			return;
+		}
 		
-		// this.creationTimes.put(m.getId(), getSimTime());
-		// this.nrofCreated++;
+		this.creationTimes.put(m.getId(), getSimTime());
+		this.nrofCreated++;
 		// if (m.getResponseSize() > 0) {
 		// 	this.nrofResponseReqCreated++;
 		// }
-		updateMsgGenerated();
+		// updateMsgGenerated();
 		// System.out.println("asdf");
 	}
 	
@@ -144,20 +144,16 @@ public class MulticastReport extends Report implements MessageListener {
 	public void done() {
 		write("Message stats for scenario " + getScenarioName() + 
 				"\nsim_time: " + format(getSimTime()));
-		// double deliveryProb = 0; // delivery probability
+		double deliveryProb = 0; // delivery probability
 		// double responseProb = 0; // request-response success probability
 		// double overHead = Double.NaN;	// overhead ratio
 		
-		// if (this.nrofCreated > 0) {
-		// 	deliveryProb = (1.0 * this.nrofDelivered) / this.nrofCreated;
-		// }
+		if (this.nrofCreated > 0) {
+			deliveryProb = (1.0 * this.nrofDelivered) / this.nrofCreated;
+		}
 		// if (this.nrofDelivered > 0) {
 		// 	overHead = (1.0 * (this.nrofRelayed - this.nrofDelivered)) /
 		// 		this.nrofDelivered;
-		// }
-		// if (this.nrofResponseReqCreated > 0) {
-		// 	responseProb = (1.0* this.nrofResponseDelivered) / 
-		// 		this.nrofResponseReqCreated;
 		// }
 		
 		// String statsText = "created: " + this.nrofCreated + 
@@ -179,7 +175,15 @@ public class MulticastReport extends Report implements MessageListener {
 		// 	"\nrtt_avg: " + getAverage(this.rtt) +
 		// 	"\nrtt_med: " + getMedian(this.rtt)
 		// 	;
-		String statsText="created: "+this.nrofCreated+", delivered: "+ this.nrofDelivered+" \n";
+		String statsText="created: "+this.nrofCreated+
+						 "\ndelivered: "+ this.nrofDelivered+
+					     // "\ndropped: " + this.nrofDropped +
+					     // "\nremoved: " + this.nrofRemoved +
+					     "\ndelivery_prob: " + format(deliveryProb) +
+						 "\nlatency_avg: " + getAverage(this.latencies) +
+						 "\nlatency_med: " + getMedian(this.latencies) + 
+					     "\nbuffertime_avg: " + getAverage(this.msgBufferTime) +
+						 "\nbuffertime_med: " + getMedian(this.msgBufferTime);
 		
 		write(statsText);
 		super.done();
