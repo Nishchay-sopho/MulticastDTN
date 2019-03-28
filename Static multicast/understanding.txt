@@ -1,0 +1,43 @@
+Added content field in Message
+Added private content attribute in messageCreateEvent.java
+then in processEvent added content to message
+Added "Content" to showInfo() in InfoPanel.java file
+messageTransferred() method in MessageRouter.java responsible for terminating messages once reached to the intended destinations.
+
+
+
+showInfo() method in InfoPanel.java is the main method for showing the content on the GUI of the simulator.
+MessageEventGenerator.java file creates the object for MessageCreateEvent.java where processEvent() method creates a new message.
+
+ 
+ 
+Now, we are required to create a mechanism in which we create an individual sort of message from each node corresponding to the data of the group list.
+
+
+
+For static multicast:
+   -1. change message.getTo() check in messageTransferred() in MessageRouter.java for multiple destinations: Done at 16:15
+   -2. Change getMessageForConnected() in ActiveRouter.java for multiple destinations: Done at 16:35
+   -3. Implement the methods in MulticastEventGenerator class from multicast's perspective: Most probably done at 14:25
+   -4. Change call for message creation in MessageCreateEvent.java: Changed call and also overloaded the constructor for Message.java at 14:35
+	5. Make changes required in the settings file.
+	
+Installed java-11 on laptop on 25th Feb.
+
+Update on 26th March:
+1. Changed in messageTransferred() method to generate a new message after removing a receiver and then inform the message listeners about a new message.
+2. Created new my_compile.sh and runmulticast.sh files to make it run according to new java version since old java version is not supported.
+
+Update on 17th March 16:19:
+1. MulticastEventGenerator will only generate one message just to get the sense of the reason why messageTrasferred() is not giving the desired results.
+
+
+Changes made in the files which may bring harm in future:
+1. FloatingApplication.java: lno. 157 and 460 has Message Constructor with destination list as null.
+2. PingApplication.java: lno. 129 has destination list which was earlier attached with the message and lno. 179 has null since we are generating a ping message packet which doesn't require multicast.
+3. Added null destination list in ActiveRouter.java when sending response in messageTransferred() method.
+
+
+Finally made a new class named MulticastReport in which the messsageTransferred() method is keeping track of messages whose multicast operation is completed. This is happening as the report class is implementing MessageListener class and the messageTransferred() method is being called in messageTransferred() method in the MessageRouter class.
+
+Check if there is some messageCreated() knd of method for messageCreated as above for the messageTransferred().

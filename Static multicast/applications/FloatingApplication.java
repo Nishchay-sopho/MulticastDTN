@@ -396,7 +396,7 @@ public class FloatingApplication extends Application {
 		    // Now we are allowed to create a new floating message
 		    Message m = new Message(host, destinationHost(), "floating" + msg_seq_no++ + "-" +
 					    SimClock.getIntTime() + "-" + host.getAddress(),
-					    getMessageSize());
+					    getMessageSize(),null);
 		    m.addProperty("type", "floating");
 		    m.addProperty("anchor", anchor.clone());
 		    m.addProperty("r", getR());
@@ -459,7 +459,7 @@ public class FloatingApplication extends Application {
 
 		    Message m = new Message(host, destinationHost(), "floating" + msg_seq_no++ + "-" +
 					    SimClock.getIntTime() + "-" + host.getAddress(),
-					    msgsize);
+					    msgsize,null);
 		    m.addProperty("type", "floating");
 		    m.addProperty("r", r);
 		    m.addProperty("a", a);

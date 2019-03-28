@@ -155,7 +155,7 @@ public abstract class ActiveRouter extends MessageRouter {
 		if (m.getTo() == getHost() && m.getResponseSize() > 0) {
 			// generate a response message
 			Message res = new Message(this.getHost(),m.getFrom(), 
-					RESPONSE_PREFIX+m.getId(), m.getResponseSize());
+					RESPONSE_PREFIX+m.getId(), m.getResponseSize(),null);
 			this.createNewMessage(res);
 			this.getMessage(RESPONSE_PREFIX+m.getId()).setRequest(m);
 		}

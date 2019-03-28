@@ -7,6 +7,7 @@ package input;
 import core.DTNHost;
 import core.Message;
 import core.World;
+// import report.MulticastCounter;
 
 import java.util.ArrayList;
 
@@ -73,12 +74,14 @@ public class MessageCreateEvent extends MessageEvent {
 				multicastDestinations.add(world.getNodeByAddress(this.destination_list[i]));
 			}
 			Message m= new Message(from,to,this.id,this.size,multicastDestinations);
+			// System.out.println("Message with destinations: "+multicastDestinations.toString()+" created.");
 			m.setResponseSize(this.responseSize);
 			m.setContent(this.msgContent);
 			from.createNewMessage(m);
+			// MulticastCounter.msgGenerated();
 		}
 		else {
-			Message m = new Message(from, to, this.id, this.size);
+			Message m = new Message(from, to, this.id, this.size,null);
 			m.setResponseSize(this.responseSize);
 			m.setContent(this.msgContent);
 			from.createNewMessage(m);

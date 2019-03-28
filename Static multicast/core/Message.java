@@ -21,7 +21,7 @@ public class Message implements Comparable<Message> {
 	private static boolean ttlAsSeconds = false;
 
 	/** List of destinations **/
-	private List<DTNHost> destination_list;
+	private ArrayList<DTNHost> destination_list;
 	
 	/** Value for infinite TTL of message */
 	public static final int INFINITE_TTL = -1;
@@ -84,26 +84,26 @@ public class Message implements Comparable<Message> {
 	 * 	will be the same for all replicates of the message)
 	 * @param size Size of the message (in bytes)
 	 */
-	public Message(DTNHost from, DTNHost to, String id, int size) {
-		this.from = from;
-		this.to = to;
-		this.id = id;
-		this.size = size;
-		this.path = new ArrayList<DTNHost>();
-		this.uniqueId = nextUniqueId;
+	// public Message(DTNHost from, DTNHost to, String id, int size) {
+	// 	this.from = from;
+	// 	this.to = to;
+	// 	this.id = id;
+	// 	this.size = size;
+	// 	this.path = new ArrayList<DTNHost>();
+	// 	this.uniqueId = nextUniqueId;
 		
-		this.timeCreated = SimClock.getTime();
-		this.timeReceived = this.timeCreated;
-		this.initTtl = INFINITE_TTL;
-		this.responseSize = 0;
-		this.requestMsg = null;
-		this.properties = null;
-		this.appID = null;
-		this.destination_list=null;
+	// 	this.timeCreated = SimClock.getTime();
+	// 	this.timeReceived = this.timeCreated;
+	// 	this.initTtl = INFINITE_TTL;
+	// 	this.responseSize = 0;
+	// 	this.requestMsg = null;
+	// 	this.properties = null;
+	// 	this.appID = null;
+	// 	this.destination_list=null;
 		
-		Message.nextUniqueId++;
-		addNodeOnPath(from);
-	}
+	// 	Message.nextUniqueId++;
+	// 	addNodeOnPath(from);
+	// }
 
 	/** Overloaded Message.java constructor which has the destination_list  **/
 	public Message(DTNHost from, DTNHost to, String id, int size,ArrayList<DTNHost> destination_list) {
@@ -214,8 +214,12 @@ public class Message implements Comparable<Message> {
 		}
 	}
 
-	public List<DTNHost> getDestination_list() {
+	public ArrayList<DTNHost> getDestination_list() {
 		return destination_list;
+	}
+
+	public void setDestinationList(ArrayList<DTNHost> destination_list){
+		this.destination_list=destination_list;
 	}
 
 	/**
@@ -380,7 +384,7 @@ public class Message implements Comparable<Message> {
 	 * @return A replicate of the message
 	 */
 	public Message replicate() {
-		Message m = new Message(from, to, id, size);
+		Message m = new Message(from, to, id, size,destination_list);
 		m.copyFrom(this);
 		return m;
 	}

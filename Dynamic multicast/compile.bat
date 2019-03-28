@@ -1,4 +1,4 @@
-javac -extdirs lib/ core/*.java
+javac -cp lib/ core/*.java
 javac -extdirs lib/ movement/*.java
 javac -extdirs lib/ report/*.java
 javac -extdirs lib/ routing/*.java

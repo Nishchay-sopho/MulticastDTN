@@ -47,15 +47,26 @@ public class MulticastEventGenerator extends MessageEventGenerator{
     }
 
     /** Method picking up the destinations of the multicast in the Settings file and checking if the id lies in the destinationRange and then returning to the user.**/
-    private Integer[] multicast_destination_list(){
+    private Integer[] multicast_destination_list(int fromId){
       //  int[] multicastIDs=s.getCsvInts(MULTICAST_DEST,2);
-        int numOfMulticastDestinations=multicastIDs.length;
+        // int numOfMulticastDestinations=multicastIDs.length;
         List<Integer> multicastTempID= convertToList(multicastIDs);
-        for(int i=0;i<numOfMulticastDestinations;i++){
-            if (!(multicastTempID.get(i) > destinationRange[0] && multicastTempID.get(i)<destinationRange[1])) {
+        // System.out.println(multicastIDs[6]+" "+multicastTempID.get(6));
+        for(int i=0;i<multicastTempID.size();i++){
+            int tempId=multicastTempID.get(i);  
+            // System.out.println(i+"  "+fromId + "  "+tempId);
+            if (!(tempId > destinationRange[0] && tempId<destinationRange[1])) {
+                // System.out.println("Inside");
                 multicastTempID.remove(multicastTempID.get(i));
             }
+            // System.out.println("Outside");
         }
+        // System.out.println("List: "+multicastTempID.toString());
+        // if(multicastTempID.contains(fromId)){
+        //     multicastTempID.remove(fromId);
+        // }
+        multicastTempID.removeIf(id -> (id==fromId));
+        // System.out.println("Final List: "+multicastTempID.toString());
         return multicastTempID.toArray(new Integer[multicastTempID.size()]);
 
     }
@@ -79,7 +90,7 @@ public class MulticastEventGenerator extends MessageEventGenerator{
         msgSize = drawMessageSize();
         interval = drawNextEventTimeDiff();
 
-        to_multicast=multicast_destination_list();
+        to_multicast=multicast_destination_list(from);
 
         /* Create event and advance to next event */
         MessageCreateEvent mce = new MessageCreateEvent(from, to, this.getID(),

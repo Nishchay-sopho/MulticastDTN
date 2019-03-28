@@ -10,6 +10,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Random;
 
 import routing.util.RoutingInfo;
@@ -25,6 +26,8 @@ import core.Settings;
 import core.SettingsError;
 import core.SimClock;
 import core.SimError;
+// import report.MulticastCounter;
+import report.MulticastReport;
 
 /**
  * Superclass for message routers.
@@ -359,24 +362,49 @@ public abstract class MessageRouter {
 		}
 		
 		Message aMessage = (outgoing==null)?(incoming):(outgoing);
+		// aMessage=incoming;
 		// If the application re-targets the message (changes 'to')
 		// then the message is not considered as 'delivered' to this host.
-		List<DTNHost> remainingDestinations=aMessage.getDestination_list();
+		ArrayList<DTNHost> remainingDestinations=aMessage.getDestination_list();
+		// System.out.println("Start: The multicast message:"+aMessage.getId()+ " with destinations:"+aMessage.getDestination_list());
 		if (remainingDestinations!=null){
 			isFirstDelivery = remainingDestinations.contains(this.host) && !isDeliveredMessage(aMessage);
 			//boolean isFinalDelivery = remainingDestinations.size()==1;
+			// System.out.println("RemainingDestinationsList is not null");
 			if(remainingDestinations.contains(this.host) && !isDeliveredMessage(aMessage)){
 				this.deliveredMessages.put(id,aMessage);
-				addToMessages(aMessage,false);
 				remainingDestinations.remove(this.host);
+				// System.out.println("This multicast message with id:"+aMessage.getId()+" has remainingReceivers: "+remainingDestinations.toString());
+				if(remainingDestinations.size()!=0){
+					aMessage.setDestinationList(remainingDestinations);
+					// Will probably have to change it to false since every time this is true the messageListener counts it as a new message 
+					// creation which is not the case.
+					//Changed it to false
+					addToMessages(aMessage,false);
+				}else{
+					System.out.println("Finally finished multicasting message : "+aMessage.getId());
+					// MulticastCounter.msgDelivered();
+					for (MessageListener ml : this.mListeners) {
+						if (ml.getClass() != MulticastReport.class){
+
+						}else{
+							ml.messageTransferred(aMessage, from, this.host, remainingDestinations.contains(this.host) && !isDeliveredMessage(aMessage));
+						}
+					}
+				}	
 			}else if (!remainingDestinations.contains(this.host)){
 				addToMessages(aMessage,false);
 			}else if(outgoing==null){
 				this.blacklistedMessages.put(id,null);
 			}
 			for (MessageListener ml : this.mListeners) {
-				ml.messageTransferred(aMessage, from, this.host, isFirstDelivery);
+				if (ml.getClass() == MulticastReport.class){
+
+				}else{
+					ml.messageTransferred(aMessage, from, this.host, remainingDestinations.contains(this.host) && !isDeliveredMessage(aMessage));
+				}
 			}
+
 		}else {
 			isFinalRecipient = aMessage.getTo() == this.host;
 			isFirstDelivery = isFinalRecipient && !isDeliveredMessage(aMessage);

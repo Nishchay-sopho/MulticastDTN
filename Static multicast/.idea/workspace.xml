@@ -4,7 +4,20 @@
     <option name="SCOPE_TYPE" value="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="494c681b-c2e5-4850-a83b-5c9e8e392ad8" name="Default Changelist" comment="" />
+    <list default="true" id="494c681b-c2e5-4850-a83b-5c9e8e392ad8" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Dynamic multicast/.idea/Dynamic multicast.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Dynamic multicast/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Dynamic multicast/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Dynamic multicast/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Dynamic multicast/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Dynamic multicast/compile.bat" beforeDir="false" afterPath="$PROJECT_DIR$/../Dynamic multicast/compile.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/default_scenario_MessageStatsReport.txt" beforeDir="false" afterPath="$PROJECT_DIR$/reports/default_scenario_MessageStatsReport.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../production/Dynamic multicast/.idea/Dynamic multicast.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../production/Dynamic multicast/.idea/Dynamic multicast.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../production/Dynamic multicast/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../production/Dynamic multicast/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../production/Dynamic multicast/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../production/Dynamic multicast/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,6 +122,9 @@
       <find>toho</find>
     </findStrings>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
@@ -130,30 +146,21 @@
     <option name="width" value="683" />
     <option name="height" value="741" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
-    <navigator currentView="PackagesPane" proportions="" version="1">
+    <navigator currentView="Scope" currentSubView="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope" proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="Static multicast" type="58d84e3e:PackageViewProjectNode" />
-              <item name="Static multicast" type="616d4139:PackageViewModuleNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1551070262997" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Dynamic multicast" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
@@ -214,7 +221,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="27" width="1366" height="536" extended-state="6" />
+    <frame x="0" y="27" width="1366" height="741" extended-state="6" />
     <layout>
       <window_info id="Structure" order="0" sideWeight="0.50163937" side_tool="true" weight="0.22651514" />
       <window_info id="Image Layers" order="1" />
@@ -222,7 +229,7 @@
       <window_info id="UI Designer" order="3" />
       <window_info id="Capture Tool" order="4" />
       <window_info id="Favorites" order="5" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="6" sideWeight="0.49836066" visible="true" weight="0.15757576" />
+      <window_info active="true" content_ui="combo" id="Project" order="6" sideWeight="0.49836066" visible="true" weight="0.16666667" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3295082" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32786885" />
@@ -231,10 +238,10 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3295082" />
       <window_info anchor="bottom" id="CheckStyle" order="7" />
-      <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.32972136" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.3295082" />
-      <window_info anchor="bottom" id="Messages" order="11" weight="0.3295082" />
+      <window_info anchor="bottom" id="Messages" order="11" weight="0.21710527" />
       <window_info anchor="bottom" id="FindBugs-IDEA" order="12" weight="0.3295082" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -667,7 +674,7 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>one_1.5.1-RC2</last-edited>
+          <last-edited>Static multicast</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
