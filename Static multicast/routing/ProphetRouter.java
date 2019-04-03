@@ -247,6 +247,9 @@ public class ProphetRouter extends ActiveRouter {
 						if (othRouter.getPredFor(to) > getPredFor(to)) {
 							// the other node has higher probability of delivery
 							// System.out.println("Before: "+m.getTo());
+							// This is done just for the comparator to be able to compare the messages.
+							// Also, take care about the sendQueue and don't randomize it as it will give violation of contract error
+							// while trying to sort the list.
 							m.setTo(to);
 							// System.out.println("After: "+m.getTo());
 							messages.add(new Tuple<Message, Connection>(m,con));

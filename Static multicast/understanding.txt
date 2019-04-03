@@ -45,3 +45,13 @@ Check if there is some messageCreated() knd of method for messageCreated as abov
 Update on 22:00 on 28/03:
 1. ONE already has this implemented that the data is exchanged only till the time the nodes remain in contact and no longer. This can be verified by varying the interface's transfer speed.
 2. The above thing can also be verified by seeing the abortTransfer() method in the Connection.java class.
+
+Update on 21:03 on 01/04:
+1. Working on Prophet router and facing problems in comparator (giving violation of contract error).
+
+Update on 20:40 on 02/04:
+1. Finally got the solution for prophet router.
+
+Update on 22:00 on 03/04:
+1. Completed hop count thing completely and pushed the code to github.
+2. Everything clear and just needs to be varied to get the desired results.

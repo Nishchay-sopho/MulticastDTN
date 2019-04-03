@@ -233,7 +233,7 @@ public class MulticastReport extends Report implements MessageListener {
 		for (Map.Entry<Integer,Tuple<Integer,Integer>> entry : hopCountHashMap.entrySet()){
 			if(messagesDelivered.containsKey(entry.getKey())){
 				Tuple t = entry.getValue();
-				System.out.println("key: "+t.getKey()+ " , value: "+t.getValue());
+				// System.out.println("key: "+t.getKey()+ " , value: "+t.getValue());
 				hopCount.add(new Double(t.getValue().toString())/(int)t.getKey());
 			}
 		}
