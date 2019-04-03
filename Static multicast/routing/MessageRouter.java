@@ -377,6 +377,15 @@ public abstract class MessageRouter {
 				// System.out.println("This multicast message with id:"+aMessage.getId()+" has remainingReceivers: "+remainingDestinations.toString());
 				if(remainingDestinations.size()!=0){
 					aMessage.setDestinationList(remainingDestinations);
+
+					for (MessageListener ml : this.mListeners) {
+						if (ml.getClass() != MulticastReport.class){
+
+						}else{
+							ml.updateHopCount(aMessage, from, this.host);
+						}
+					}
+
 					// Will probably have to change it to false since every time this is true the messageListener counts it as a new message 
 					// creation which is not the case.
 					//Changed it to false
@@ -388,6 +397,7 @@ public abstract class MessageRouter {
 						if (ml.getClass() != MulticastReport.class){
 
 						}else{
+							ml.updateHopCount(aMessage, from, this.host);
 							ml.messageTransferred(aMessage, from, this.host, remainingDestinations.contains(this.host) && !isDeliveredMessage(aMessage));
 						}
 					}

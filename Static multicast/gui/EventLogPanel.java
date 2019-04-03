@@ -303,6 +303,9 @@ public class EventLogPanel extends JPanel
 				to,m);
 		
 	}
+	public void updateHopCount(Message m, DTNHost from, DTNHost to){
+		
+	}
 	
 	// end of message interface implementations
 	

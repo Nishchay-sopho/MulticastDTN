@@ -178,5 +178,8 @@ public class MessageStatsReport extends Report implements MessageListener {
 		write(statsText);
 		super.done();
 	}
+	public void updateHopCount(Message m, DTNHost from, DTNHost to){
+		
+	}
 	
 }

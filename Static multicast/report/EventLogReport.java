@@ -85,4 +85,7 @@ public class EventLogReport extends Report
 	public void messageTransferStarted(Message m, DTNHost from, DTNHost to) {
 		processEvent(StandardEventsReader.SEND, from, to, m, null);		
 	}
+	public void updateHopCount(Message m, DTNHost from, DTNHost to){
+		
+	}
 }

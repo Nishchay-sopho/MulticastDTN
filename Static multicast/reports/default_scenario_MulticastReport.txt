@@ -1,9 +1,11 @@
 Message stats for scenario default_scenario
 sim_time: 43200.1000
 created: 1458
-delivered: 1
-delivery_prob: 0.0007
-latency_avg: 27353.0000
-latency_med: 27353.0000
-buffertime_avg: 1802.7110
-buffertime_med: 1044.9000
+delivered : 14
+delivery_prob: 0.0096
+hopcount_avg: 5.1107
+hopcount_med: 5.2000
+latency_avg: 20499.8071
+latency_med: 21449.3000
+buffertime_avg: 3424.8693
+buffertime_med: 2377.2000

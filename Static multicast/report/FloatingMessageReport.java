@@ -100,4 +100,7 @@ public class FloatingMessageReport extends Report implements MessageListener {
 		  + m.getProperty(FloatingContentRouter.FC_ANCHOR) + " r=" + m.getProperty(FloatingContentRouter.FC_R) + " a=" + m.getProperty(FloatingContentRouter.FC_A) + " " + m.getProperty(FloatingContentRouter.FC_TTL) + " " + m.getSize() + " "
 		  + from.toString() + " " + from.getLocation() + " " + to.toString() + " " + to.getLocation() + " " + m.getProperty (FloatingContentRouter.FC_TTL_VAL) + dep + " [" + m.getTtl() + "]");
 	}
+	public void updateHopCount(Message m, DTNHost from, DTNHost to){
+		
+	}
 }

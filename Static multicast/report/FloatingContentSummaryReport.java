@@ -320,6 +320,10 @@ public class FloatingContentSummaryReport extends Report implements MessageListe
 	msg.me.start++;
 	msg.start++;
     }
+
+    public void updateHopCount(Message m, DTNHost from, DTNHost to){
+		
+	}
     
     protected Comparator<Integer> compare = new Comparator<Integer> () {
 	public int compare (Integer i1, Integer i2) {

@@ -8,10 +8,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.HashSet;
+import util.Tuple;
 
 import core.DTNHost;
 import core.Message;
-import report.MulticastCounter;
+
 import core.MessageListener;
 
 /**
@@ -25,8 +27,11 @@ import core.MessageListener;
 public class MulticastReport extends Report implements MessageListener {
 	private Map<String, Double> creationTimes;
 	private List<Double> latencies;
-	private List<Integer> hopCounts;
+	private HashMap<Integer,Integer> messagesDelivered;
+	// private List<Integer> hopCounts;
 	private List<Double> msgBufferTime;
+	private List<Tuple<Integer,Integer>> hopCounts;
+	private HashMap<Integer,Tuple<Integer,Integer>> hopCountHashMap;
 	// private List<Double> time; // one way trip times
 	
 	private int nrofDropped;
@@ -52,7 +57,10 @@ public class MulticastReport extends Report implements MessageListener {
 		this.creationTimes = new HashMap<String, Double>();
 		this.latencies = new ArrayList<Double>();
 		this.msgBufferTime = new ArrayList<Double>();
+		this.messagesDelivered=new HashMap<Integer,Integer>();
 		// this.hopCounts = new ArrayList<Integer>();
+		this.hopCounts=new ArrayList<Tuple<Integer,Integer>>();
+		this.hopCountHashMap=new HashMap<Integer,Tuple<Integer,Integer>>();
 		// this.time = new ArrayList<Double>();
 		
 		this.nrofDropped = 0;
@@ -100,20 +108,20 @@ public class MulticastReport extends Report implements MessageListener {
 
 		// this.nrofRelayed++;
 		// if (finalTarget) {
-			this.latencies.add(getSimTime() - 
-				this.creationTimes.get(m.getId()) );
+		this.latencies.add(getSimTime() - this.creationTimes.get(m.getId()));
 		// 	this.nrofDelivered++;
-		// 	this.hopCounts.add(m.getHops().size() - 1);
+			// this.hopCounts.add(m.getHops().size() - 1);
+		// System.out.println("Hop count for "+m.getId()+ " is : "+(m.getHops().size()-1));
 			
 		// 	if (m.isResponse()) {
 		// 		this.rtt.add(getSimTime() -	m.getRequest().getCreationTime());
 		// 		this.nrofResponseDelivered++;
 		// 	}
 		// }
+		messagesDelivered.put(Integer.parseInt(m.getId().substring(4,m.getId().length())),1);
 		updateMsgDelivered();
 		// this.time.add(getSimTime()-m.getCreationTime());
 	}
-
 
 	public void newMessage(Message m) {
 		if (isWarmup()) {
@@ -151,6 +159,7 @@ public class MulticastReport extends Report implements MessageListener {
 		if (this.nrofCreated > 0) {
 			deliveryProb = (1.0 * this.nrofDelivered) / this.nrofCreated;
 		}
+		List<Double> hopCount=calculateHopCountsForDeliveredMessages(hopCountHashMap,messagesDelivered);
 		// if (this.nrofDelivered > 0) {
 		// 	overHead = (1.0 * (this.nrofRelayed - this.nrofDelivered)) /
 		// 		this.nrofDelivered;
@@ -176,10 +185,12 @@ public class MulticastReport extends Report implements MessageListener {
 		// 	"\nrtt_med: " + getMedian(this.rtt)
 		// 	;
 		String statsText="created: "+this.nrofCreated+
-						 "\ndelivered: "+ this.nrofDelivered+
+						 "\ndelivered : "+ this.nrofDelivered+
 					     // "\ndropped: " + this.nrofDropped +
 					     // "\nremoved: " + this.nrofRemoved +
 					     "\ndelivery_prob: " + format(deliveryProb) +
+					     "\nhopcount_avg: " + getAverage(hopCount) +
+						 "\nhopcount_med: " + getMedian(hopCount) + 
 						 "\nlatency_avg: " + getAverage(this.latencies) +
 						 "\nlatency_med: " + getMedian(this.latencies) + 
 					     "\nbuffertime_avg: " + getAverage(this.msgBufferTime) +
@@ -194,5 +205,38 @@ public class MulticastReport extends Report implements MessageListener {
 	}
 	public void updateMsgDelivered(){
 		this.nrofDelivered++;
+	}
+
+
+	public void updateHopCount(Message m, DTNHost from, DTNHost to){
+		// this.hopCounts.add(m.getHops().size() - 1);
+		int id=Integer.parseInt(m.getId().substring(4,m.getId().length()));
+		// System.out.println("Hop count for "+id.toString()+ " is : "+m.getHops().toString());
+		Tuple<Integer,Integer> tuple;
+		if(!hopCountHashMap.containsKey(id)){
+			tuple=new Tuple<Integer,Integer>(1,m.getHops().size()-1);
+			hopCountHashMap.put(id,tuple);
+		}else{
+			Tuple oldTuple=hopCountHashMap.get(id);
+			int receivers=(int)oldTuple.getKey()+1;
+			int totalHopCounts=(int)oldTuple.getValue()+m.getHops().size()-1;
+			tuple=new Tuple<Integer,Integer>(receivers,totalHopCounts);
+			hopCountHashMap.replace(id,tuple);
+		}
+		// System.out.println("Hop count for message with id: "+id+" in tuple with number of receivers "+tuple.getKey()+ " and total hop count: "+tuple.getValue() );
+
+	}
+
+	public List<Double> calculateHopCountsForDeliveredMessages(HashMap<Integer,Tuple<Integer,Integer>> hopCountHashMap,HashMap<Integer,Integer> messagesDelivered){
+		List<Double> hopCount=new ArrayList<Double>();
+		// HashSet msgIds=hopCountHashMap.entrySet();
+		for (Map.Entry<Integer,Tuple<Integer,Integer>> entry : hopCountHashMap.entrySet()){
+			if(messagesDelivered.containsKey(entry.getKey())){
+				Tuple t = entry.getValue();
+				System.out.println("key: "+t.getKey()+ " , value: "+t.getValue());
+				hopCount.add(new Double(t.getValue().toString())/(int)t.getKey());
+			}
+		}
+		return hopCount;
 	}
 }

@@ -77,4 +77,8 @@ public class DTN2Reporter extends Report implements MessageListener {
 			}
 		}
 	}
+
+	public void updateHopCount(Message m, DTNHost from, DTNHost to){
+		
+	}
 }

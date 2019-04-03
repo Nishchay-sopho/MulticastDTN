@@ -228,12 +228,30 @@ public class ProphetRouter extends ActiveRouter {
 			}
 			
 			for (Message m : msgCollection) {
-				if (othRouter.hasMessage(m.getId())) {
-					continue; // skip messages that the other one has
-				}
-				if (othRouter.getPredFor(m.getTo()) > getPredFor(m.getTo())) {
-					// the other node has higher probability of delivery
-					messages.add(new Tuple<Message, Connection>(m,con));
+				if (m.getDestination_list() ==null){
+					if (othRouter.hasMessage(m.getId())) {
+						continue; // skip messages that the other one has
+					}
+					if (othRouter.getPredFor(m.getTo()) > getPredFor(m.getTo())) {
+						// the other node has higher probability of delivery
+						messages.add(new Tuple<Message, Connection>(m,con));
+					}
+				}else{
+					List<DTNHost> list= m.getDestination_list();
+					// System.out.println("List: "+list.toString());
+					for (int i=0;i<list.size();i++){
+						DTNHost to=list.get(i);
+						if (othRouter.hasMessage(m.getId())) {
+							continue; // skip messages that the other one has
+						}
+						if (othRouter.getPredFor(to) > getPredFor(to)) {
+							// the other node has higher probability of delivery
+							// System.out.println("Before: "+m.getTo());
+							m.setTo(to);
+							// System.out.println("After: "+m.getTo());
+							messages.add(new Tuple<Message, Connection>(m,con));
+						}
+					}
 				}
 			}			
 		}
@@ -243,6 +261,7 @@ public class ProphetRouter extends ActiveRouter {
 		}
 		
 		// sort the message-connection tuples
+		// System.out.println("List of messages: " +messages.toString());
 		Collections.sort(messages, new TupleComparator());
 		return tryMessagesForConnected(messages);	// try to send messages
 	}
@@ -258,6 +277,7 @@ public class ProphetRouter extends ActiveRouter {
 		public int compare(Tuple<Message, Connection> tuple1,
 				Tuple<Message, Connection> tuple2) {
 			// delivery probability of tuple1's message with tuple1's connection
+			// System.out.println("Comparing : "+tuple1.getKey().getTo()+" and "+tuple2.getKey().getTo());
 			double p1 = ((ProphetRouter)tuple1.getValue().
 					getOtherNode(getHost()).getRouter()).getPredFor(
 					tuple1.getKey().getTo());
@@ -268,6 +288,7 @@ public class ProphetRouter extends ActiveRouter {
 
 			// bigger probability should come first
 			if (p2-p1 == 0) {
+				// System.out.println("Reached equal probabilities");
 				/* equal probabilities -> let queue mode decide */
 				return compareByQueueMode(tuple1.getKey(), tuple2.getKey());
 			}

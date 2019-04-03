@@ -52,7 +52,7 @@ Scenario.nrofHostGroups = 1
 
 # Common settings for all groups
 #Group.movementModel = ShortestPathMapBasedMovement
-Group.router = FirstContactRouter
+Group.router = EpidemicRouter
 Group.bufferSize =15M
 Group.waitTime = 0, 120
 # All nodes have the bluetooth interface
@@ -62,6 +62,10 @@ Group.interface1 = btInterface
 Group.speed = 0,1
 # Message TTL of 500 minutes 
 Group.msgTtl = 500
+#Message ordering in case of same prophet probabilities
+#Only to be used in case of Prophet routing, not of any use elsewhere
+#Setting this to 1 will give error since random queuing creates problems
+Group.sendQueue=2
 
 Group.nrofHosts = 100
 

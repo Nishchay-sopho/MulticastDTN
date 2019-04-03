@@ -143,6 +143,13 @@ public class Message implements Comparable<Message> {
 		return this.to;
 	}
 
+	// This method has been put to change the to destination of a message to 
+	// make the default comparator of the message to work in case of multicast
+	// in a prophet router.
+	public void setTo(DTNHost to) {
+		this.to = to;
+	}
+
 	/**
 	 * Returns the ID of the message
 	 * @return The message id

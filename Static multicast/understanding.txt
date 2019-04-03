@@ -41,3 +41,7 @@ Changes made in the files which may bring harm in future:
 Finally made a new class named MulticastReport in which the messsageTransferred() method is keeping track of messages whose multicast operation is completed. This is happening as the report class is implementing MessageListener class and the messageTransferred() method is being called in messageTransferred() method in the MessageRouter class.
 
 Check if there is some messageCreated() knd of method for messageCreated as above for the messageTransferred().
+
+Update on 22:00 on 28/03:
+1. ONE already has this implemented that the data is exchanged only till the time the nodes remain in contact and no longer. This can be verified by varying the interface's transfer speed.
+2. The above thing can also be verified by seeing the abortTransfer() method in the Connection.java class.
